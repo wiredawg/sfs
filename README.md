@@ -4,13 +4,12 @@ This script serves a directory over HTTPS.
 
 ```bash
 # Generate a self-signed HTTPS certificate
-$ mkdir ~/.certs && cd ~/.certs
-$ openssl -x509 -sha26 -newkey rsa:4096 -days 3650 -nodes -keyout server.key -out server.crt
-$ chmod -R go-rwx .
+$ mkdir ~/.sfs && cd ~/.sfs
+$ openssl -x509 -sha256 -newkey rsa:4096 -days 3650 -nodes -keyout key -out crt
 
-# Set envrionment variables pointing to certificates
-$ export HTTPS_KEY=$HOME/.certs/server.key
-$ export HTTPS_CRT=$HOME/.certs/server.crt
+# Setup passwd file for username and password
+$ echo "{'name':'test', 'pass':'pass'}" > passwd
+$ chmod -R go-rwx .
 
 $ cd /path/to/content
 

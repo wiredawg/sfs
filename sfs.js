@@ -12,16 +12,20 @@ const auth = require('basic-auth')
 var static_dir = (process.argv[2] === '.') ? process.cwd() : process.argv[2] || 'public';
 
 /* HTTPS Credentials */
-var key_file = process.env.HTTPS_KEY;
-var crt_file = process.env.HTTPS_CRT;
+var key_file = process.env.SFS_HTTPS_KEY || process.env.HOME + '/.sfs/key';
+var crt_file = process.env.SFS_HTTPS_CRT || process.env.HOME + '/.sfs/crt';
 
 if ( !key_file || !crt_file ) {
     console.log('-error- You must set $HTTPS_KEY and $HTTPS_CRT');
     process.exit(-1);
 }
 
-var key = fs.readFileSync(process.env.HTTPS_KEY, 'utf8');
-var crt = fs.readFileSync(process.env.HTTPS_CRT, 'utf8');
+var key = fs.readFileSync(key_file, 'utf8');
+var crt = fs.readFileSync(crt_file, 'utf8');
+
+/* Basic authentication user credentials */
+var passwd_file = process.env.SFS_PASSWD_FILE || process.env.HOME + '/.sfs/passwd';
+var user = JSON.parse(fs.readFileSync(passwd_file, 'utf8'));
 
 /* Basic authentication middleware */
 function basic_auth(req, res, next) {
@@ -31,8 +35,8 @@ function basic_auth(req, res, next) {
         return res.sendStatus(401);
     };
  
-    var user = auth(req);
-    if (!user || user.name !== 'test' || user.pass !== 'pass') {
+    var u = auth(req);
+    if (!u || u.name !== user.name || u.pass !== user.pass) {
         return unauthorized(res);
     } else {
         return next();
