@@ -12,8 +12,8 @@ const auth = require('basic-auth')
 var static_dir = (process.argv[2] === '.') ? process.cwd() : process.argv[2] || 'public';
 
 /* HTTPS Credentials */
-var key_file = process.env.SFS_HTTPS_KEY || process.env.HOME + '/.sfs/key';
-var crt_file = process.env.SFS_HTTPS_CRT || process.env.HOME + '/.sfs/crt';
+var key_file = process.env.SFS_HTTPS_KEY || process.env.HOME + '/.sfs/key.pem';
+var crt_file = process.env.SFS_HTTPS_CRT || process.env.HOME + '/.sfs/crt.pem';
 
 if ( !key_file || !crt_file ) {
     console.log('-error- You must set $HTTPS_KEY and $HTTPS_CRT');
