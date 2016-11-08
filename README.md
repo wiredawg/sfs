@@ -23,7 +23,7 @@ $ cd /path/to/content
 # Serve the 'public' directory
 $ sfs
 
-# Serve a different directory
-$ sfs.js /path/to/your/stuff
+# Serve a different directory on a different port
+$ sfs.js --dir /path/to/your/stuff --port 8081
 ```
 
