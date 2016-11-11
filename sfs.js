@@ -43,11 +43,12 @@ while (args.length > 0) {
             break;
         case '-h':
         case '--help':
-            console.log( usage() );
+            console.log(usage());
+            process.exit(0);
             break;
         default:
             console.log('-error- Invalid option: ' + a);
-            console.log( usage() );
+            console.log(usage());
             process.exit(-1);
     }
 }
