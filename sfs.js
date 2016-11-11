@@ -41,8 +41,13 @@ while (args.length > 0) {
         case '--port':
             port = args.shift();
             break;
+        case '-h':
+        case '--help':
+            console.log( usage() );
+            break;
         default:
             console.log('-error- Invalid option: ' + a);
+            console.log( usage() );
             process.exit(-1);
     }
 }
@@ -98,3 +103,14 @@ if (enable_ssl) {
 server.listen(port);
 console.log('Starting '+((enable_auth)?'':'un')+'authenticating server on http'+((enable_ssl)?'s':'')+'://localhost:' + port + ', serving: ' + static_dir);
 
+
+function usage() {
+    return "usage: sfs [options]\n" +
+           "\n" +
+           "options:\n" +
+           "  -d, --dir DIRNAME     Path to serve\n" +
+           "  -h, --help            Print this message to STDOUT\n" +
+           "  -p, --port PORT       Port to serve from\n" +
+           "  -u, --unsecure        No authentication, not ssl\n" +
+           "  --no-ssl              Disable SSL";
+}
